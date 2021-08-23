@@ -1,0 +1,93 @@
+package com.fiap.sociallearn.service;
+
+import com.fiap.sociallearn.exceptions.ApiErrorException;
+import com.fiap.sociallearn.model.ClassScheduling;
+import com.fiap.sociallearn.repository.ClassSchedulingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@Service
+public class ClassSchedulingService {
+  @Autowired
+  ClassSchedulingRepository classSchedulingRepository;
+
+  @Autowired
+  UserService userService;
+
+  @Autowired
+  LearningContentService learningContentService;
+
+  public ClassScheduling save(ClassScheduling classScheduling) throws ApiErrorException {
+    validClassScheduling(classScheduling);
+    return classSchedulingRepository.save(classScheduling);
+  }
+
+  public void validClassScheduling(final ClassScheduling classScheduling)
+      throws ApiErrorException {
+    boolean isValidUsers = classScheduling.getUsers()
+        .stream()
+        .allMatch(user -> userService.findById(user.getId()) != null);
+    boolean containsSomeTeacher = classScheduling.getUsers()
+        .stream()
+        .map(user -> userService.findById(user.getId()))
+        .filter(Objects::nonNull)
+        .map(user -> user.getProfiles())
+        .map(profiles -> profiles.stream())
+        .anyMatch(profileStream -> profileStream.anyMatch(profile -> profile.getId() == 2));
+    boolean isValidLearningContentId =
+        learningContentService.findById(classScheduling.getLearningContent().getId()) != null;
+    if (!isValidUsers || !containsSomeTeacher || !isValidLearningContentId) {
+      throw new ApiErrorException(HttpStatus.BAD_REQUEST, "Invalid Class Scheduling Params");
+    }
+  }
+
+  public ClassScheduling findById(Long id) throws ApiErrorException {
+    Optional<ClassScheduling> optionalCourse = classSchedulingRepository.findById(id);
+    return optionalCourse.orElseThrow(() -> new ApiErrorException(HttpStatus.NOT_FOUND,
+        "The informed class scheduling doesn't exists"));
+  }
+
+  public List<ClassScheduling> findAll() {
+    return (List<ClassScheduling>) classSchedulingRepository.findAll();
+  }
+
+  public List<ClassScheduling> findAllByUserId(final Long userId) {
+    return classSchedulingRepository.findAllByUserId(userId);
+  }
+
+  public ClassScheduling update(Long classSchedulingId, ClassScheduling updatedClassScheduling)
+      throws ApiErrorException {
+    var classScheduling = updateSavedClassScheduling(classSchedulingId, updatedClassScheduling);
+    return classSchedulingRepository.save(classScheduling);
+  }
+
+  private ClassScheduling updateSavedClassScheduling(final Long classSchedulingId,
+      final ClassScheduling updatedClassScheduling) throws ApiErrorException {
+    var savedClassScheduling = findById(classSchedulingId);
+    savedClassScheduling.setDurationInHours(updatedClassScheduling.getDurationInHours());
+    savedClassScheduling.setRealizationDate(updatedClassScheduling.getRealizationDate());
+    savedClassScheduling.setCourseMode(updatedClassScheduling.getCourseMode());
+    savedClassScheduling.setLearningContent(updatedClassScheduling.getLearningContent());
+    savedClassScheduling.setUsers(updatedClassScheduling.getUsers());
+    savedClassScheduling.setActive(updatedClassScheduling.isActive());
+    savedClassScheduling.setLastModifiedDate(Date.from(Instant.now()));
+    return savedClassScheduling;
+  }
+
+  public ClassScheduling inactivate(Long classSchedulingId) throws ApiErrorException {
+    var classScheduling = findById(classSchedulingId);
+    classScheduling.setActive(false);
+    return classSchedulingRepository.save(classScheduling);
+  }
+
+  public void deleteById(Long id) {
+    classSchedulingRepository.deleteById(id);
+  }
+}
