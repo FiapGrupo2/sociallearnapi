@@ -31,7 +31,7 @@ public class UserService {
     profiles.stream().forEach(profile -> profileService.findById(profile.getId()));
   }
 
-  public User findById(Long id) throws ApiErrorException {
+  public User findById(String id) throws ApiErrorException {
     Optional<User> optionalUser = userRepository.findById(id);
     return optionalUser.orElseThrow(
         () -> new ApiErrorException(HttpStatus.NOT_FOUND, "The informed user doesn't exists"));
@@ -41,12 +41,12 @@ public class UserService {
     return (List<User>) userRepository.findAll();
   }
 
-  public User update(Long userId, User updatedUser) throws ApiErrorException {
+  public User update(String userId, User updatedUser) throws ApiErrorException {
     var user = updateSavedUser(userId, updatedUser);
     return userRepository.save(user);
   }
 
-  private User updateSavedUser(final Long userId, final User updatedUser) throws ApiErrorException {
+  private User updateSavedUser(final String userId, final User updatedUser) throws ApiErrorException {
     var savedUser = findById(userId);
     savedUser.setName(updatedUser.getName());
     savedUser.setEmail(updatedUser.getEmail());
@@ -58,13 +58,13 @@ public class UserService {
     return savedUser;
   }
 
-  public User inactive(Long userId) throws ApiErrorException {
+  public User inactive(String userId) throws ApiErrorException {
     var savedUser = findById(userId);
     savedUser.setActive(false);
     return userRepository.save(savedUser);
   }
 
-  public void deleteById(Long id) {
+  public void deleteById(String id) {
     userRepository.deleteById(id);
   }
 }

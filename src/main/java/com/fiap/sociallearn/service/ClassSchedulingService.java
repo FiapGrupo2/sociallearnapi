@@ -40,7 +40,7 @@ public class ClassSchedulingService {
         .filter(Objects::nonNull)
         .map(user -> user.getProfiles())
         .map(profiles -> profiles.stream())
-        .anyMatch(profileStream -> profileStream.anyMatch(profile -> profile.getId() == 2));
+        .anyMatch(profileStream -> profileStream.anyMatch(profile -> profile.getId() == "TEA"));
     boolean isValidLearningContentId =
         learningContentService.findById(classScheduling.getLearningContent().getId()) != null;
     if (!isValidUsers || !containsSomeTeacher || !isValidLearningContentId) {
@@ -48,7 +48,7 @@ public class ClassSchedulingService {
     }
   }
 
-  public ClassScheduling findById(Long id) throws ApiErrorException {
+  public ClassScheduling findById(String id) throws ApiErrorException {
     Optional<ClassScheduling> optionalCourse = classSchedulingRepository.findById(id);
     return optionalCourse.orElseThrow(() -> new ApiErrorException(HttpStatus.NOT_FOUND,
         "The informed class scheduling doesn't exists"));
@@ -58,17 +58,17 @@ public class ClassSchedulingService {
     return (List<ClassScheduling>) classSchedulingRepository.findAll();
   }
 
-  public List<ClassScheduling> findAllByUserId(final Long userId) {
-    return classSchedulingRepository.findAllByUserId(userId);
+  public List<ClassScheduling> findAllByUserId(final String userId) {
+    return classSchedulingRepository.findByUserId(userId);
   }
 
-  public ClassScheduling update(Long classSchedulingId, ClassScheduling updatedClassScheduling)
+  public ClassScheduling update(String classSchedulingId, ClassScheduling updatedClassScheduling)
       throws ApiErrorException {
     var classScheduling = updateSavedClassScheduling(classSchedulingId, updatedClassScheduling);
     return classSchedulingRepository.save(classScheduling);
   }
 
-  private ClassScheduling updateSavedClassScheduling(final Long classSchedulingId,
+  private ClassScheduling updateSavedClassScheduling(final String classSchedulingId,
       final ClassScheduling updatedClassScheduling) throws ApiErrorException {
     var savedClassScheduling = findById(classSchedulingId);
     savedClassScheduling.setDurationInHours(updatedClassScheduling.getDurationInHours());
@@ -81,13 +81,13 @@ public class ClassSchedulingService {
     return savedClassScheduling;
   }
 
-  public ClassScheduling inactivate(Long classSchedulingId) throws ApiErrorException {
+  public ClassScheduling inactivate(String classSchedulingId) throws ApiErrorException {
     var classScheduling = findById(classSchedulingId);
     classScheduling.setActive(false);
     return classSchedulingRepository.save(classScheduling);
   }
 
-  public void deleteById(Long id) {
+  public void deleteById(String id) {
     classSchedulingRepository.deleteById(id);
   }
 }

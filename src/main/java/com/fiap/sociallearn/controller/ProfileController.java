@@ -36,7 +36,7 @@ public class ProfileController {
 
   @ApiOperation(value = "Search profile by id")
   @GetMapping("/{profileId}")
-  public ResponseEntity<ProfileResponse> findById(@PathVariable final Long profileId) {
+  public ResponseEntity<ProfileResponse> findById(@PathVariable final String profileId) {
     try {
       var profile = profileService.findById(profileId);
       return ResponseEntity.ok().body(profile.toResponse());
@@ -57,7 +57,7 @@ public class ProfileController {
 
   @ApiOperation(value = "Update profile")
   @PutMapping("/update/{profileId}")
-  public ResponseEntity<ProfileResponse> update(@PathVariable Long profileId,
+  public ResponseEntity<ProfileResponse> update(@PathVariable String profileId,
       @RequestBody ProfileRequest profileRequest) {
     try {
       var profile = profileService.update(profileId, profileRequest.toEntity());
@@ -70,7 +70,7 @@ public class ProfileController {
 
   @ApiOperation(value = "Inactivate profile")
   @PutMapping("/inactivate/{profileId}")
-  public ResponseEntity<ProfileResponse> inactivate(@PathVariable Long profileId) {
+  public ResponseEntity<ProfileResponse> inactivate(@PathVariable String profileId) {
     try {
       var profile = profileService.inactivate(profileId);
       return ResponseEntity.ok().body(profile.toResponse());
@@ -82,7 +82,7 @@ public class ProfileController {
 
   @ApiOperation(value = "Delete profile")
   @DeleteMapping("/delete/{profileId}")
-  public ResponseEntity<String> delete(@PathVariable Long profileId) {
+  public ResponseEntity<String> delete(@PathVariable String profileId) {
     try {
       profileService.deleteById(profileId);
       return ResponseEntity.ok().body("Profile deleted");

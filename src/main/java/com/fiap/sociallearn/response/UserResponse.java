@@ -9,7 +9,8 @@ import java.util.List;
 @Builder
 @Data
 public class UserResponse {
-  private Long id;
+  private Long seq;
+  private String id;
   private String name;
   private String email;
   private Gender gender;

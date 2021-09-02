@@ -18,7 +18,7 @@ public class UserRequest {
   private String email;
   private String password;
   private Gender gender;
-  private List<Long> profilesId;
+  private List<String> profilesId;
 
   public User toEntity() {
     return User.builder()

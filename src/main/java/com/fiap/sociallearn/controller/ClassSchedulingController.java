@@ -38,7 +38,7 @@ public class ClassSchedulingController {
   @ApiOperation(value = "Search class scheduling by id")
   @GetMapping("/{classSchedulingId}")
   public ResponseEntity<ClassSchedulingResponse> findById(
-      @PathVariable final Long classSchedulingId) {
+      @PathVariable final String classSchedulingId) {
     try {
       var classScheduling = classSchedulingService.findById(classSchedulingId);
       return ResponseEntity.ok().body(classScheduling.toResponse());
@@ -61,7 +61,7 @@ public class ClassSchedulingController {
   @ApiOperation(value = "Search all class scheduling by userId")
   @GetMapping("/all/user/{userId}")
   public ResponseEntity<List<ClassSchedulingResponse>> findAllByUserId(
-      @PathVariable final Long userId) {
+      @PathVariable final String userId) {
     List<ClassScheduling> classSchedulingList = classSchedulingService.findAllByUserId(userId);
     List<ClassSchedulingResponse> classSchedulingResponseList = classSchedulingList.stream()
         .map(classScheduling -> classScheduling.toResponse())
@@ -71,7 +71,7 @@ public class ClassSchedulingController {
 
   @ApiOperation(value = "Update class scheduling")
   @PutMapping("/update/{classSchedulingId}")
-  public ResponseEntity<ClassSchedulingResponse> update(@PathVariable Long classSchedulingId,
+  public ResponseEntity<ClassSchedulingResponse> update(@PathVariable String classSchedulingId,
       @RequestBody ClassSchedulingRequest classSchedulingRequest) {
     try {
       var classScheduling =
@@ -85,7 +85,7 @@ public class ClassSchedulingController {
 
   @ApiOperation(value = "Inactivate class scheduling")
   @PutMapping("/inactivate/{classSchedulingId}")
-  public ResponseEntity<ClassSchedulingResponse> inactivate(@PathVariable Long classSchedulingId) {
+  public ResponseEntity<ClassSchedulingResponse> inactivate(@PathVariable String classSchedulingId) {
     try {
       var classScheduling = classSchedulingService.inactivate(classSchedulingId);
       return ResponseEntity.ok().body(classScheduling.toResponse());
@@ -97,7 +97,7 @@ public class ClassSchedulingController {
 
   @ApiOperation(value = "Delete class scheduling")
   @DeleteMapping("/delete/{classSchedulingId}")
-  public ResponseEntity<String> delete(@PathVariable Long classSchedulingId) {
+  public ResponseEntity<String> delete(@PathVariable String classSchedulingId) {
     try {
       classSchedulingService.deleteById(classSchedulingId);
       return ResponseEntity.ok().body("Class scheduling deleted");

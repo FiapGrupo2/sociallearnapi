@@ -5,36 +5,29 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-@Table(name = "learning_content")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@Document
 public class LearningContent {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
 
   private String name;
 
-//  @OnDelete(action = OnDeleteAction.CASCADE)
-  @ManyToMany
-  @JoinTable(name = "learning_content_areas", joinColumns = @JoinColumn(name = "learning_content_id"), inverseJoinColumns = @JoinColumn(name = "content_area_id"))
   private List<ContentArea> contentAreas;
 
-  private boolean active = true;
+  private boolean active;
 
   @CreatedDate
   private Date createdDate;

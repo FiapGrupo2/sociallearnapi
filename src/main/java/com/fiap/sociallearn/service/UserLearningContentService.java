@@ -36,7 +36,7 @@ public class UserLearningContentService {
     }
   }
 
-  public UserLearningContent findById(Long id) throws ApiErrorException {
+  public UserLearningContent findById(String id) throws ApiErrorException {
     Optional<UserLearningContent> optionalUserLearningContent =
         userLearningContentRepository.findById(id);
     return optionalUserLearningContent.orElseThrow(() -> new ApiErrorException(HttpStatus.NOT_FOUND,
@@ -47,7 +47,7 @@ public class UserLearningContentService {
     return (List<UserLearningContent>) userLearningContentRepository.findAll();
   }
 
-  public void deleteById(Long id) {
+  public void deleteById(String id) {
     userLearningContentRepository.deleteById(id);
   }
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 @Builder
 @Data
 public class ContentAreaResponse {
-  private Long id;
+  private String id;
   private String name;
   private boolean active;
 }

@@ -37,7 +37,7 @@ public class ContentAreaController {
 
   @ApiOperation(value = "Search content area by id")
   @GetMapping("/{contentAreaId}")
-  public ResponseEntity<ContentAreaResponse> findById(@PathVariable final Long contentAreaId) {
+  public ResponseEntity<ContentAreaResponse> findById(@PathVariable final String contentAreaId) {
     try {
       var contentArea = contentAreaService.findById(contentAreaId);
       return ResponseEntity.ok().body(contentArea.toResponse());
@@ -59,7 +59,7 @@ public class ContentAreaController {
 
   @ApiOperation(value = "Update content area")
   @PutMapping("/update/{contentAreaId}")
-  public ResponseEntity<ContentAreaResponse> update(@PathVariable Long contentAreaId,
+  public ResponseEntity<ContentAreaResponse> update(@PathVariable String contentAreaId,
       @RequestBody ContentAreaRequest contentAreaRequest) {
     try {
       var contentArea = contentAreaService.update(contentAreaId, contentAreaRequest.toEntity());
@@ -72,7 +72,7 @@ public class ContentAreaController {
 
   @ApiOperation(value = "Inactivate content area")
   @PutMapping("/inactivate/{contentAreaId}")
-  public ResponseEntity<ContentAreaResponse> inactivate(@PathVariable Long contentAreaId) {
+  public ResponseEntity<ContentAreaResponse> inactivate(@PathVariable String contentAreaId) {
     try {
       var contentArea = contentAreaService.inactivate(contentAreaId);
       return ResponseEntity.ok().body(contentArea.toResponse());
@@ -84,7 +84,7 @@ public class ContentAreaController {
 
   @ApiOperation(value = "Delete content area")
   @DeleteMapping("/delete/{contentAreaId}")
-  public ResponseEntity<String> delete(@PathVariable Long contentAreaId) {
+  public ResponseEntity<String> delete(@PathVariable String contentAreaId) {
     try {
       contentAreaService.deleteById(contentAreaId);
       return ResponseEntity.ok().body("Content area deleted");

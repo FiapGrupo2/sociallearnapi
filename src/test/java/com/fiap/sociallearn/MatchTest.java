@@ -42,9 +42,9 @@ public class MatchTest {
   public void init() {
     saveProfiles();
     saveUsers();
-    saveContentArea();
-    saveLearningContent();
-    associateUsersWithLearningContent();
+    // saveContentArea();
+    // saveLearningContent();
+    // associateUsersWithLearningContent();
   }
 
   public void saveProfiles() {
@@ -59,18 +59,11 @@ public class MatchTest {
   }
 
   private void saveUsers() {
-    List<Long> userProfilesId = new ArrayList<>();
-    userProfilesId.add(1L);
-
-    List<Long> teacherProfilesId = new ArrayList<>();
-    teacherProfilesId.add(2L);
-
     User studentUserEntity = UserRequest.builder()
         .name("Debora Santos")
         .email("deborasantos@gmail.com")
         .gender(Gender.FEMALE)
         .password("123456")
-        .profilesId(userProfilesId)
         .build()
         .toEntity();
 
@@ -79,7 +72,6 @@ public class MatchTest {
         .email("rodolfonascimento@gmail.com")
         .gender(Gender.MALE)
         .password("654321")
-        .profilesId(teacherProfilesId)
         .build()
         .toEntity();
 
@@ -91,9 +83,7 @@ public class MatchTest {
   }
 
   public void saveContentArea() {
-    ContentArea contentAreaEntity =
-        ContentAreaRequest.builder().name("Cloud Computing").build().toEntity();
-
+    ContentArea contentAreaEntity = ContentAreaRequest.builder().name("Cloud Computing").build().toEntity();
     ContentArea savedContentArea = contentAreaRepository.save(contentAreaEntity);
     assertNotNull(savedContentArea);
   }
@@ -104,7 +94,6 @@ public class MatchTest {
 
     LearningContent learningContentEntity = LearningContentRequest.builder()
         .name("Amazon Web Services - EC2")
-        .contentAreaIds(contentAreaIdsList)
         .build()
         .toEntity();
 
@@ -114,15 +103,10 @@ public class MatchTest {
   }
 
   private void associateUsersWithLearningContent() {
-    UserLearningContent studentAssociationEntity =
-        UserLearningContentRequest.builder().userId(1L).learningContentId(1L).build().toEntity();
-    UserLearningContent teacherAssociationEntity =
-        UserLearningContentRequest.builder().userId(2L).learningContentId(1L).build().toEntity();
-
-    UserLearningContent savedStudentAssociation =
-        userLearningContentRepository.save(studentAssociationEntity);
-    UserLearningContent savedTeacherAssociation =
-        userLearningContentRepository.save(teacherAssociationEntity);
+    UserLearningContent studentAssociationEntity = UserLearningContentRequest.builder().userId("").learningContentId("").build().toEntity();
+    UserLearningContent teacherAssociationEntity = UserLearningContentRequest.builder().userId("").learningContentId("").build().toEntity();
+    UserLearningContent savedStudentAssociation = userLearningContentRepository.save(studentAssociationEntity);
+    UserLearningContent savedTeacherAssociation = userLearningContentRepository.save(teacherAssociationEntity);
 
     assertNotNull(savedStudentAssociation);
     assertNotNull(savedTeacherAssociation);
@@ -131,9 +115,10 @@ public class MatchTest {
 
   @Test
   public void testFindTeachersByLearningContent() {
-    List<User> teachers = userRepository.findAllUsersByLearningContentAndProfile(1L, 2L);
-
-    User teacher1 = userRepository.findById(2L).orElse(null);
+    String learningContentId = "";
+    String userProfileId = "";
+    List<User> teachers = userRepository.findByLearningContentIdAndProfileId(learningContentId, userProfileId);
+    User teacher1 = userRepository.findById("").orElse(null);
 
     assertTrue(teachers.contains(teacher1));
   }

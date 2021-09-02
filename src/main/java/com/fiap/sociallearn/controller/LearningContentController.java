@@ -38,7 +38,7 @@ public class LearningContentController {
   @ApiOperation(value = "Search learning content by id")
   @GetMapping("/{learningContentId}")
   public ResponseEntity<LearningContentResponse> findById(
-      @PathVariable final Long learningContentId) {
+      @PathVariable final String learningContentId) {
     try {
       var learningContent = learningContentService.findById(learningContentId);
       return ResponseEntity.ok().body(learningContent.toResponse());
@@ -60,7 +60,7 @@ public class LearningContentController {
 
   @ApiOperation(value = "Update learning content")
   @PutMapping("/update/{learningContentId}")
-  public ResponseEntity<LearningContentResponse> update(@PathVariable Long learningContentId,
+  public ResponseEntity<LearningContentResponse> update(@PathVariable String learningContentId,
       @RequestBody LearningContentRequest learningContentRequest) {
     try {
       var learningContent =
@@ -74,7 +74,7 @@ public class LearningContentController {
 
   @ApiOperation(value = "Inactivate learning content")
   @PutMapping("/inactivate/{learningContentId}")
-  public ResponseEntity<LearningContentResponse> inactivate(@PathVariable Long learningContentId) {
+  public ResponseEntity<LearningContentResponse> inactivate(@PathVariable String learningContentId) {
     try {
       var learningContent = learningContentService.inactivate(learningContentId);
       return ResponseEntity.ok().body(learningContent.toResponse());
@@ -86,7 +86,7 @@ public class LearningContentController {
 
   @ApiOperation(value = "Delete learning content")
   @DeleteMapping("/delete/{learningContentId}")
-  public ResponseEntity<String> delete(@PathVariable Long learningContentId) {
+  public ResponseEntity<String> delete(@PathVariable String learningContentId) {
     try {
       learningContentService.deleteById(learningContentId);
       return ResponseEntity.ok().body("Learning content deleted");

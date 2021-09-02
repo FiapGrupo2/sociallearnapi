@@ -21,14 +21,14 @@ public class MatchController {
 
   @ApiOperation(value = "Find teachers by learning content")
   @GetMapping("/teachers/learningContent/{learningContentId}")
-  public ResponseEntity<List<User>> findTeachersByLearningContent(Long learningContentId) {
+  public ResponseEntity<List<User>> findTeachersByLearningContent(String learningContentId) {
     List<User> teachers = matchService.findAllTeachersByLearningContent(learningContentId);
     return ResponseEntity.ok().body(teachers);
   }
 
   @ApiOperation(value = "Find students by learning content")
   @GetMapping("/students/learningContent/{learningContentId}")
-  public ResponseEntity<List<User>> findStudentsByLearningContent(Long learningContentId) {
+  public ResponseEntity<List<User>> findStudentsByLearningContent(String learningContentId) {
     List<User> students = matchService.findAllStudentsByLearningContent(learningContentId);
     return ResponseEntity.ok().body(students);
   }

@@ -42,7 +42,7 @@ public class UserController {
 
   @ApiOperation(value = "Find user by id")
   @GetMapping("/{userId}")
-  public ResponseEntity<UserResponse> findById(@PathVariable final Long userId) {
+  public ResponseEntity<UserResponse> findById(@PathVariable final String userId) {
     try {
       var user = userService.findById(userId);
       return ResponseEntity.ok().body(user.toResponse());
@@ -63,7 +63,7 @@ public class UserController {
 
   @ApiOperation(value = "Update user")
   @PutMapping("/update/{userId}")
-  public ResponseEntity<UserResponse> update(@PathVariable Long userId,
+  public ResponseEntity<UserResponse> update(@PathVariable String userId,
       @RequestBody UserRequest userRequest) {
     try {
       var user = userService.update(userId, userRequest.toEntity());
@@ -90,7 +90,7 @@ public class UserController {
 
   @ApiOperation(value = "Inactivate user")
   @PutMapping("/inactivate/{userId}")
-  public ResponseEntity<UserResponse> inactivate(@PathVariable final Long userId) {
+  public ResponseEntity<UserResponse> inactivate(@PathVariable final String userId) {
     try {
       var user = userService.inactive(userId);
       return ResponseEntity.ok().body(user.toResponse());
@@ -102,7 +102,7 @@ public class UserController {
 
   @ApiOperation(value = "Delete user")
   @DeleteMapping("/delete/{userId}")
-  public ResponseEntity<String> delete(@PathVariable final Long userId) {
+  public ResponseEntity<String> delete(@PathVariable final String userId) {
     try {
       userService.deleteById(userId);
       return ResponseEntity.ok().body("User deleted");

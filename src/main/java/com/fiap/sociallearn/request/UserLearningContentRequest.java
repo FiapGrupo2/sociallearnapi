@@ -12,8 +12,8 @@ import java.util.Date;
 @Data
 @Builder
 public class UserLearningContentRequest {
-  private Long userId;
-  private Long learningContentId;
+  private String userId;
+  private String learningContentId;
 
   public UserLearningContent toEntity() {
     return UserLearningContent.builder()

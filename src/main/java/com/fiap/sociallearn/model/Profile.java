@@ -10,23 +10,17 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
-@Table(name = "profile")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class Profile {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-  private String name;
-  private boolean active = true;
 
-  @ManyToMany
-  private List<User> users;
+  @Id
+  private String id;
+  private String name;
+  private boolean active;
 
   @CreatedDate
   private Date createdDate;

@@ -5,40 +5,41 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Table(name = "user")
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Document(collection = "users")
 public class User {
+
+  @Transient
+  public static final String SEQUENCE_NAME = "users_sequence";
+
+  //Used for Id relational like db sequence
+  private long seq;
+
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
   private String name;
   private String email;
   private String password;
 
-  @Column(name = "gender", nullable = false)
-  @Enumerated(EnumType.STRING)
   private Gender gender;
 
-//  @OnDelete(action = OnDeleteAction.CASCADE)
-  @ManyToMany
-  @JoinTable(name = "user_profiles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "profile_id"))
   private List<Profile> profiles;
+  private List<LearningContent> learningContents;
 
-  private boolean active = true;
+  private boolean active;
 
   @CreatedDate
   private Date createdDate;
@@ -49,6 +50,7 @@ public class User {
   public UserResponse toResponse() {
     return UserResponse.builder()
         .id(getId())
+        .seq(getSeq())
         .name(getName())
         .email(getEmail())
         .gender(getGender())
