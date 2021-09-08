@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class ClassSchedulingController {
       return ResponseEntity.ok().body(savedClassScheduling.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).header(e.getMessage()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header(e.getMessage()).build();
     }
   }
 
@@ -44,7 +45,7 @@ public class ClassSchedulingController {
       return ResponseEntity.ok().body(classScheduling.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).header(e.getMessage()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header(e.getMessage()).build();
     }
   }
 
@@ -79,7 +80,7 @@ public class ClassSchedulingController {
       return ResponseEntity.ok().body(classScheduling.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).header(e.getMessage()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header(e.getMessage()).build();
     }
   }
 
@@ -91,7 +92,7 @@ public class ClassSchedulingController {
       return ResponseEntity.ok().body(classScheduling.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
 

@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+//import org.springframework.data.mongodb.core.index.Indexed;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Data
 @Builder
@@ -21,13 +20,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Document(collection = "users")
 public class User {
-
-  @Transient
-  public static final String SEQUENCE_NAME = "users_sequence";
-
-  //Used for Id relational like db sequence
-  private long seq;
-
   @Id
   private String id;
   private String name;
@@ -50,7 +42,6 @@ public class User {
   public UserResponse toResponse() {
     return UserResponse.builder()
         .id(getId())
-        .seq(getSeq())
         .name(getName())
         .email(getEmail())
         .gender(getGender())
