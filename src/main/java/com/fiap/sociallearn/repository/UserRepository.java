@@ -12,4 +12,6 @@ import java.util.List;
 public interface UserRepository extends MongoRepository<User, String> {
   @Query(value = "{'learningContents.id': ?0, 'profiles.id' : ?1}")
   List<User> findByLearningContentIdAndProfileId(String learningContentId, String userProfileId);
+
+  User findByEmail(String email);
 }

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "users")
+@Document
 public class User {
   @Id
   private String id;
@@ -28,7 +28,6 @@ public class User {
 
   private Gender gender;
 
-  private List<Profile> profiles;
   private List<LearningContent> learningContents;
 
   private boolean active;
@@ -45,9 +44,6 @@ public class User {
         .name(getName())
         .email(getEmail())
         .gender(getGender())
-        .profiles(getProfiles().stream()
-            .map(profile -> profile.toResponse())
-            .collect(Collectors.toList()))
         .active(isActive())
         .build();
   }

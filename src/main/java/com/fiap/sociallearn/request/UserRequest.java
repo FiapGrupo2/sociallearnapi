@@ -26,9 +26,6 @@ public class UserRequest {
         .email(getEmail())
         .gender(getGender())
         .password(getPassword())
-        .profiles(getProfilesId().stream()
-            .map(profileId -> Profile.builder().id(profileId).build())
-            .collect(Collectors.toList()))
         .active(true)
         .createdDate(Date.from(Instant.now()))
         .build();

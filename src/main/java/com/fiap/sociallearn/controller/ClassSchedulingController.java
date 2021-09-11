@@ -25,8 +25,7 @@ public class ClassSchedulingController {
 
   @ApiOperation(value = "Register class scheduling")
   @PostMapping("/schedule")
-  public ResponseEntity<ClassSchedulingResponse> schedule(
-      @RequestBody ClassSchedulingRequest classSchedulingRequest) {
+  public ResponseEntity<ClassSchedulingResponse> schedule(@RequestBody ClassSchedulingRequest classSchedulingRequest) {
     try {
       var savedClassScheduling = classSchedulingService.save(classSchedulingRequest.toEntity());
       return ResponseEntity.ok().body(savedClassScheduling.toResponse());
@@ -38,8 +37,7 @@ public class ClassSchedulingController {
 
   @ApiOperation(value = "Search class scheduling by id")
   @GetMapping("/{classSchedulingId}")
-  public ResponseEntity<ClassSchedulingResponse> findById(
-      @PathVariable final String classSchedulingId) {
+  public ResponseEntity<ClassSchedulingResponse> findById(@PathVariable final String classSchedulingId) {
     try {
       var classScheduling = classSchedulingService.findById(classSchedulingId);
       return ResponseEntity.ok().body(classScheduling.toResponse());
@@ -61,8 +59,7 @@ public class ClassSchedulingController {
 
   @ApiOperation(value = "Search all class scheduling by userId")
   @GetMapping("/all/user/{userId}")
-  public ResponseEntity<List<ClassSchedulingResponse>> findAllByUserId(
-      @PathVariable final String userId) {
+  public ResponseEntity<List<ClassSchedulingResponse>> findAllByUserId(@PathVariable final String userId) {
     List<ClassScheduling> classSchedulingList = classSchedulingService.findAllByUserId(userId);
     List<ClassSchedulingResponse> classSchedulingResponseList = classSchedulingList.stream()
         .map(classScheduling -> classScheduling.toResponse())
@@ -72,8 +69,7 @@ public class ClassSchedulingController {
 
   @ApiOperation(value = "Update class scheduling")
   @PutMapping("/update/{classSchedulingId}")
-  public ResponseEntity<ClassSchedulingResponse> update(@PathVariable String classSchedulingId,
-      @RequestBody ClassSchedulingRequest classSchedulingRequest) {
+  public ResponseEntity<ClassSchedulingResponse> update(@PathVariable String classSchedulingId,@RequestBody ClassSchedulingRequest classSchedulingRequest) {
     try {
       var classScheduling =
           classSchedulingService.update(classSchedulingId, classSchedulingRequest.toEntity());

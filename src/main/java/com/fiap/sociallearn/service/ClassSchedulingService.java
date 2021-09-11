@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -34,16 +33,9 @@ public class ClassSchedulingService {
     boolean isValidUsers = classScheduling.getUsers()
         .stream()
         .allMatch(user -> userService.findById(user.getId()) != null);
-    boolean containsSomeTeacher = classScheduling.getUsers()
-        .stream()
-        .map(user -> userService.findById(user.getId()))
-        .filter(Objects::nonNull)
-        .map(user -> user.getProfiles())
-        .map(profiles -> profiles.stream())
-        .anyMatch(profileStream -> profileStream.anyMatch(profile -> profile.getId() == "TEA"));
     boolean isValidLearningContentId =
         learningContentService.findById(classScheduling.getLearningContent().getId()) != null;
-    if (!isValidUsers || !containsSomeTeacher || !isValidLearningContentId) {
+    if (!isValidUsers || !isValidLearningContentId) {
       throw new ApiErrorException(HttpStatus.BAD_REQUEST, "Invalid Class Scheduling Params");
     }
   }
@@ -68,8 +60,7 @@ public class ClassSchedulingService {
     return classSchedulingRepository.save(classScheduling);
   }
 
-  private ClassScheduling updateSavedClassScheduling(final String classSchedulingId,
-      final ClassScheduling updatedClassScheduling) throws ApiErrorException {
+  private ClassScheduling updateSavedClassScheduling(final String classSchedulingId,final ClassScheduling updatedClassScheduling) throws ApiErrorException {
     var savedClassScheduling = findById(classSchedulingId);
     savedClassScheduling.setDurationInHours(updatedClassScheduling.getDurationInHours());
     savedClassScheduling.setRealizationDate(updatedClassScheduling.getRealizationDate());
