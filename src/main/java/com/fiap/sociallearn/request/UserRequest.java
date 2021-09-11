@@ -18,7 +18,7 @@ public class UserRequest {
   private String email;
   private String password;
   private Gender gender;
-  private List<Long> profilesId;
+  private List<String> profilesId;
 
   public User toEntity() {
     return User.builder()
@@ -26,9 +26,6 @@ public class UserRequest {
         .email(getEmail())
         .gender(getGender())
         .password(getPassword())
-        .profiles(getProfilesId().stream()
-            .map(profileId -> Profile.builder().id(profileId).build())
-            .collect(Collectors.toList()))
         .active(true)
         .createdDate(Date.from(Instant.now()))
         .build();

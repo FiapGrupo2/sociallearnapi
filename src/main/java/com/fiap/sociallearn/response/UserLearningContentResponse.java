@@ -6,7 +6,7 @@ import lombok.Data;
 @Builder
 @Data
 public class UserLearningContentResponse {
-  private Long id;
+  private String id;
   private UserResponse user;
   private LearningContentResponse learningContentResponse;
   private boolean active;

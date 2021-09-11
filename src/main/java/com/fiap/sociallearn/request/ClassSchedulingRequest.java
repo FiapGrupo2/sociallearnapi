@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class ClassSchedulingRequest {
-  private List<Long> usersIdList;
-  private Long learningContentId;
+  private List<String> usersIdList;
+  private String learningContentId;
   private CourseMode courseMode;
   private Double durationInHours;
   private LocalDateTime realizationDate;

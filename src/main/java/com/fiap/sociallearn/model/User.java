@@ -5,40 +5,32 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
-import javax.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
+//import org.springframework.data.mongodb.core.index.Indexed;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Table(name = "user")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Document
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
   private String name;
   private String email;
   private String password;
 
-  @Column(name = "gender", nullable = false)
-  @Enumerated(EnumType.STRING)
   private Gender gender;
 
-//  @OnDelete(action = OnDeleteAction.CASCADE)
-  @ManyToMany
-  @JoinTable(name = "user_profiles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "profile_id"))
-  private List<Profile> profiles;
+  private List<LearningContent> learningContents;
 
-  private boolean active = true;
+  private boolean active;
 
   @CreatedDate
   private Date createdDate;
@@ -52,9 +44,6 @@ public class User {
         .name(getName())
         .email(getEmail())
         .gender(getGender())
-        .profiles(getProfiles().stream()
-            .map(profile -> profile.toResponse())
-            .collect(Collectors.toList()))
         .active(isActive())
         .build();
   }

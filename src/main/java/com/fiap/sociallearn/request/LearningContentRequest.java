@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Builder
 public class LearningContentRequest {
   private String name;
-  private List<Long> contentAreaIds;
+  private List<String> contentAreaIds;
 
   public LearningContent toEntity() {
     return LearningContent.builder()

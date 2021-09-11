@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,14 +32,14 @@ public class LearningContentController {
       return ResponseEntity.ok().body(savedLearningContent.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).header(e.getMessage()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header(e.getMessage()).build();
     }
   }
 
   @ApiOperation(value = "Search learning content by id")
   @GetMapping("/{learningContentId}")
   public ResponseEntity<LearningContentResponse> findById(
-      @PathVariable final Long learningContentId) {
+      @PathVariable final String learningContentId) {
     try {
       var learningContent = learningContentService.findById(learningContentId);
       return ResponseEntity.ok().body(learningContent.toResponse());
@@ -60,7 +61,7 @@ public class LearningContentController {
 
   @ApiOperation(value = "Update learning content")
   @PutMapping("/update/{learningContentId}")
-  public ResponseEntity<LearningContentResponse> update(@PathVariable Long learningContentId,
+  public ResponseEntity<LearningContentResponse> update(@PathVariable String learningContentId,
       @RequestBody LearningContentRequest learningContentRequest) {
     try {
       var learningContent =
@@ -68,25 +69,25 @@ public class LearningContentController {
       return ResponseEntity.ok().body(learningContent.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).header(e.getMessage()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header(e.getMessage()).build();
     }
   }
 
   @ApiOperation(value = "Inactivate learning content")
   @PutMapping("/inactivate/{learningContentId}")
-  public ResponseEntity<LearningContentResponse> inactivate(@PathVariable Long learningContentId) {
+  public ResponseEntity<LearningContentResponse> inactivate(@PathVariable String learningContentId) {
     try {
       var learningContent = learningContentService.inactivate(learningContentId);
       return ResponseEntity.ok().body(learningContent.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
 
   @ApiOperation(value = "Delete learning content")
   @DeleteMapping("/delete/{learningContentId}")
-  public ResponseEntity<String> delete(@PathVariable Long learningContentId) {
+  public ResponseEntity<String> delete(@PathVariable String learningContentId) {
     try {
       learningContentService.deleteById(learningContentId);
       return ResponseEntity.ok().body("Learning content deleted");
