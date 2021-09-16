@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -31,7 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         "/webjars/**",
         // -- Swagger UI v3 (OpenAPI)
         "/v3/api-docs/**",
-        "/swagger-ui/**"
+        "/swagger-ui/**",
+        "/login",
+        "/users/register"
         // other public endpoints of your API may be appended to this array
     };
 
@@ -39,13 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and().authorizeRequests()
         .antMatchers(AUTH_WHITELIST).permitAll()
-        .antMatchers(HttpMethod.POST, "/login").permitAll()
-          .anyRequest().authenticated()
-          .and()
-          // Filter for the api/login requests
-          .addFilterBefore(new LoginFilter("/login", authenticationManager()),UsernamePasswordAuthenticationFilter.class)
-          // Filter for other requests to check JWT in header
-          .addFilterBefore(new AuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
+        .anyRequest().authenticated()
+        .and()
+        // Filter for the api/login requests
+        .addFilterBefore(new LoginFilter("/login", authenticationManager()),UsernamePasswordAuthenticationFilter.class)
+        // Filter for other requests to check JWT in header
+        .addFilterBefore(new AuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
     }
     @Bean
     CorsConfigurationSource corsConfigurationSource(){

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Api("Match")
 @RestController
-@RequestMapping("/match")
+@RequestMapping("/matches")
 public class MatchController {
   @Autowired
   MatchService matchService;

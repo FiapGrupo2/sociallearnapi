@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Api("Class")
 @RestController
-@RequestMapping("/class")
+@RequestMapping("/classes")
 public class ClassSchedulingController {
   @Autowired
   ClassSchedulingService classSchedulingService;

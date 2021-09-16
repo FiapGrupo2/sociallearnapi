@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Api("User")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
   @Autowired
   UserService userService;

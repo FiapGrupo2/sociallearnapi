@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Api("LearningContent")
 @RestController
-@RequestMapping("/learningContent")
+@RequestMapping("/learningContents")
 public class LearningContentController {
   @Autowired
   LearningContentService learningContentService;
