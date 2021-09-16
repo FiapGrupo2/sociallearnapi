@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Api("ContentArea")
 @RestController
-@RequestMapping("/contentArea")
+@RequestMapping("/contentAreas")
 public class ContentAreaController {
   @Autowired
   ContentAreaService contentAreaService;
