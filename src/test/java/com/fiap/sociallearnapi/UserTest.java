@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -21,11 +22,14 @@ public class UserTest {
     @Autowired
     private UserController userController;
 
+    @Autowired
+	PasswordEncoder encoder;
+
     @Test
     public void register_user(){
         assertNotNull(userController);
 
-        UserRequest userRequest = new UserRequest("jhon", "jhon@snow.com", "jjj", Gender.MALE);
+        UserRequest userRequest = new UserRequest("jhon","jhon","jhon@snow.com", encoder.encode("jjj"), Gender.MALE);
         ResponseEntity<UserResponse> response = userController.register(userRequest);
 
         assertEquals(200, response.getStatusCodeValue());

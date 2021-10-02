@@ -6,9 +6,6 @@ import com.fiap.sociallearn.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -17,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService{
   @Autowired
   UserRepository userRepository;
 
@@ -43,6 +40,7 @@ public class UserService implements UserDetailsService {
   private User updateSavedUser(final String userId, final User updatedUser) throws ApiErrorException {
     var savedUser = findById(userId);
     savedUser.setName(updatedUser.getName());
+    savedUser.setUsername(updatedUser.getUsername());
     savedUser.setEmail(updatedUser.getEmail());
     savedUser.setPassword(updatedUser.getPassword());
     savedUser.setGender(updatedUser.getGender());
@@ -61,11 +59,4 @@ public class UserService implements UserDetailsService {
     userRepository.deleteById(id);
   }
 
-  @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-      User currentUser = userRepository.findByEmail(email);
-        UserDetails user = new org.springframework.security.core.userdetails.User(email, currentUser.getPassword()
-        , true, true, true, true, Collections.emptyList());
-        return user;
-  }
 }

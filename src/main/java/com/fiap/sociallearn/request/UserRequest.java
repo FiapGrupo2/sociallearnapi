@@ -15,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserRequest {
   private String name;
+  private String username;
   private String email;
   private String password;
   private Gender gender;
@@ -22,6 +23,7 @@ public class UserRequest {
   public User toEntity() {
     return User.builder()
         .name(getName())
+        .username(getUsername())
         .email(getEmail())
         .gender(getGender())
         .password(getPassword())

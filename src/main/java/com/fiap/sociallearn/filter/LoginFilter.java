@@ -29,17 +29,16 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter{
             throws AuthenticationException, IOException, ServletException {
         
         User userCredentials = new ObjectMapper().readValue(request.getInputStream(), User.class);
-        return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
-            userCredentials.getEmail(),
-            userCredentials.getPassword(),
-            Collections.emptyList()
-        ));
+        String username = userCredentials.getUsername();
+        String password = userCredentials.getPassword().toLowerCase();
+        
+        return getAuthenticationManager()
+        .authenticate(new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList()));
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, 
-        FilterChain chain,
-        Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) 
+        throws IOException, ServletException {
             AuthenticationService.addToken(response, authResult.getName());
     }
 }
