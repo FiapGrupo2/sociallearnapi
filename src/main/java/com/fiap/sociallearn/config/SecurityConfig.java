@@ -40,8 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // -- Swagger UI v3 (OpenAPI)
         "/v3/api-docs/**",
         "/swagger-ui/**",
-        "/users/register",
-		"/api/auth/signin"
+        "/users/register"
         // other public endpoints of your API may be appended to this array
     };
 
@@ -84,20 +83,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
-    // @Bean
-    // CorsConfigurationSource corsConfigurationSource(){
-    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    @Bean
+    CorsConfigurationSource corsConfigurationSource(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         
-    //     CorsConfiguration config = new CorsConfiguration();
-    //     config.setAllowedOrigins(Arrays.asList("*"));
-    //     config.setAllowedMethods(Arrays.asList("*"));
-    //     config.setAllowedHeaders(Arrays.asList("*"));
-    //     config.setAllowCredentials(true);
-    //     config.applyPermitDefaultValues();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(Arrays.asList("*", "http://localhost:3000"));
+		config.setAllowedMethods(Arrays.asList("GET","POST","PUT", "DELETE", "PATCH"));
+        //config.setAllowedMethods(Arrays.asList("*"));
+       	config.setAllowedHeaders(Arrays.asList("*"));
+        //config.setAllowCredentials(false);
+        //config.applyPermitDefaultValues();
 
-    //     source.registerCorsConfiguration("/**", config);
-    //     return source;
-    // }
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 
 
     

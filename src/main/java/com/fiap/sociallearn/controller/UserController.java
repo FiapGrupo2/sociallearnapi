@@ -53,7 +53,7 @@ public class UserController {
   }
 
   @ApiOperation(value = "Find all users")
-  @GetMapping("/all")
+  @GetMapping("/all/itens")
   public ResponseEntity<List<UserResponse>> findAll() {
     List<User> userList = userService.findAll();
     List<UserResponse> userResponseList =
