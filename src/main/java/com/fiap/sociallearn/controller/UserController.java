@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Api("User")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
   @Autowired
   UserService userService;
@@ -53,7 +53,7 @@ public class UserController {
   }
 
   @ApiOperation(value = "Find all users")
-  @GetMapping("/all")
+  @GetMapping("/all/itens")
   public ResponseEntity<List<UserResponse>> findAll() {
     List<User> userList = userService.findAll();
     List<UserResponse> userResponseList =

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Api("ContentArea")
 @RestController
-@RequestMapping("/contentArea")
+@RequestMapping("/contentAreas")
 public class ContentAreaController {
   @Autowired
   ContentAreaService contentAreaService;
@@ -49,7 +49,7 @@ public class ContentAreaController {
   }
 
   @ApiOperation(value = "Search all content area")
-  @GetMapping("/all")
+  @GetMapping("/all/itens")
   public ResponseEntity<List<ContentAreaResponse>> findAll() {
     List<ContentArea> contentAreaList = contentAreaService.findAll();
     List<ContentAreaResponse> contentAreaResponseList = contentAreaList.stream()

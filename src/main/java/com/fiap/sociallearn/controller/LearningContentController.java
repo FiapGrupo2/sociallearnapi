@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api("LearningContent")
+//@CrossOrigin(origins = "*", maxAge = 3600)
+//@Api("LearningContent")
 @RestController
-@RequestMapping("/learningContent")
+@RequestMapping("/api/learningContents")
 public class LearningContentController {
   @Autowired
   LearningContentService learningContentService;
@@ -50,7 +51,7 @@ public class LearningContentController {
   }
 
   @ApiOperation(value = "Search all learning content")
-  @GetMapping("/all")
+  @GetMapping("/all/itens")
   public ResponseEntity<List<LearningContentResponse>> findAll() {
     List<LearningContent> learningContentList = learningContentService.findAll();
     List<LearningContentResponse> learningContentResponseList = learningContentList.stream()
