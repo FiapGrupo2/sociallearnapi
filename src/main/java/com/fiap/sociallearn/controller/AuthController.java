@@ -30,7 +30,7 @@ import com.fiap.sociallearn.repository.UserRepository;
 import com.fiap.sociallearn.security.JwtUtils;
 import com.fiap.sociallearn.security.UserDetailsImpl;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -46,7 +46,7 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
-    @PostMapping("/login")
+    @PostMapping(path = "/login", name = "login")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
 		Authentication authentication = authenticationManager.authenticate(

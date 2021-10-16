@@ -29,7 +29,7 @@ public class UserTest {
     public void register_user(){
         assertNotNull(userController);
 
-        UserRequest userRequest = new UserRequest("jhon","jhon","jhon@snow.com", encoder.encode("jjj"), Gender.MALE);
+        UserRequest userRequest = new UserRequest("jhon","jhon","jhon@snow.com", encoder.encode("jjjx"), Gender.MALE);
         ResponseEntity<UserResponse> response = userController.register(userRequest);
 
         assertEquals(200, response.getStatusCodeValue());

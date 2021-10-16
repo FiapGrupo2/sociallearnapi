@@ -28,7 +28,7 @@ public class User {
   private String email;
   private String password;
 
-  private Gender gender;
+  private String gender;
 
   private List<LearningContent> learningContents;
 

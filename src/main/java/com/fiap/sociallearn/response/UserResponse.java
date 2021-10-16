@@ -14,7 +14,7 @@ public class UserResponse {
   private String name;
   private String username;
   private String email;
-  private Gender gender;
+  private String gender;
   private List<ProfileResponse> profiles;
   private boolean active;
 }

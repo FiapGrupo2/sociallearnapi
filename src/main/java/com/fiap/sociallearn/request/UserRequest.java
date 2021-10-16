@@ -18,7 +18,7 @@ public class UserRequest {
   private String username;
   private String email;
   private String password;
-  private Gender gender;
+  private String gender;
 
   public User toEntity() {
     return User.builder()

@@ -39,6 +39,7 @@ public class UserController {
   @ApiOperation(value = "Register user")
   @PostMapping("/register")
   public ResponseEntity<UserResponse> register(@RequestBody UserRequest userRequest) {
+    UserRequest a = userRequest;
     try {
       var savedUser = userService.save(userRequest.toEntity());
       return ResponseEntity.ok().body(savedUser.toResponse());

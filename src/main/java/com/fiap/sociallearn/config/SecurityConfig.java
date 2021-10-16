@@ -39,7 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// // -- Swagger UI v3 (OpenAPI)
 			// "/v3/api-docs/**",
 			// "/swagger-ui/**",
-			"/api/auth/**", "api/user/register"
+
+			"/api/user/register",
+			"/api/auth/login",
 			// other public endpoints of your API may be appended to this array
 	};
 
@@ -67,14 +69,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder(16);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated();
+
+		http.cors().and()
+				.csrf().disable()
+				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
+				.authorizeRequests()
+				.antMatchers(AUTH_WHITELIST).permitAll()
+				.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
