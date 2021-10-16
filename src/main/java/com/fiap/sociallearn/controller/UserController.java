@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api("User")
+//@Api("User")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
   @Autowired
   UserService userService;
