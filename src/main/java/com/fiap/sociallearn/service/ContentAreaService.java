@@ -21,11 +21,11 @@ public class ContentAreaService {
     return contentAreaRepository.save(contentArea);
   }
 
-  public void deleteById(Long id) {
+  public void deleteById(String id) {
     contentAreaRepository.deleteById(id);
   }
 
-  public ContentArea findById(Long id) throws ApiErrorException {
+  public ContentArea findById(String id) throws ApiErrorException {
     Optional<ContentArea> optionalContentArea = contentAreaRepository.findById(id);
     return optionalContentArea.orElseThrow(() -> new ApiErrorException(HttpStatus.NOT_FOUND,
         "The informed content area doesn't exists"));
@@ -35,13 +35,13 @@ public class ContentAreaService {
     return (List<ContentArea>) contentAreaRepository.findAll();
   }
 
-  public ContentArea update(Long contentAreaId, ContentArea updatedContentArea)
+  public ContentArea update(String contentAreaId, ContentArea updatedContentArea)
       throws ApiErrorException {
     var contentArea = updateSavedContentArea(contentAreaId, updatedContentArea);
     return contentAreaRepository.save(contentArea);
   }
 
-  private ContentArea updateSavedContentArea(final Long contentAreaId,
+  private ContentArea updateSavedContentArea(final String contentAreaId,
       final ContentArea updatedContentArea) throws ApiErrorException {
     var savedContentArea = findById(contentAreaId);
     savedContentArea.setName(updatedContentArea.getName());
@@ -50,7 +50,7 @@ public class ContentAreaService {
     return savedContentArea;
   }
 
-  public ContentArea inactivate(Long contentAreaId) throws ApiErrorException {
+  public ContentArea inactivate(String contentAreaId) throws ApiErrorException {
     var savedContentArea = findById(contentAreaId);
     savedContentArea.setActive(false);
     return contentAreaRepository.save(savedContentArea);

@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Api("ContentArea")
 @RestController
-@RequestMapping("/contentArea")
+@RequestMapping("/contentAreas")
 public class ContentAreaController {
   @Autowired
   ContentAreaService contentAreaService;
@@ -31,24 +32,24 @@ public class ContentAreaController {
       return ResponseEntity.ok().body(savedContentArea.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).header(e.getMessage()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header(e.getMessage()).build();
     }
   }
 
   @ApiOperation(value = "Search content area by id")
   @GetMapping("/{contentAreaId}")
-  public ResponseEntity<ContentAreaResponse> findById(@PathVariable final Long contentAreaId) {
+  public ResponseEntity<ContentAreaResponse> findById(@PathVariable final String contentAreaId) {
     try {
       var contentArea = contentAreaService.findById(contentAreaId);
       return ResponseEntity.ok().body(contentArea.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).header(e.getMessage()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header(e.getMessage()).build();
     }
   }
 
   @ApiOperation(value = "Search all content area")
-  @GetMapping("/all")
+  @GetMapping("/all/itens")
   public ResponseEntity<List<ContentAreaResponse>> findAll() {
     List<ContentArea> contentAreaList = contentAreaService.findAll();
     List<ContentAreaResponse> contentAreaResponseList = contentAreaList.stream()
@@ -59,32 +60,32 @@ public class ContentAreaController {
 
   @ApiOperation(value = "Update content area")
   @PutMapping("/update/{contentAreaId}")
-  public ResponseEntity<ContentAreaResponse> update(@PathVariable Long contentAreaId,
+  public ResponseEntity<ContentAreaResponse> update(@PathVariable String contentAreaId,
       @RequestBody ContentAreaRequest contentAreaRequest) {
     try {
       var contentArea = contentAreaService.update(contentAreaId, contentAreaRequest.toEntity());
       return ResponseEntity.ok().body(contentArea.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).header(e.getMessage()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header(e.getMessage()).build();
     }
   }
 
   @ApiOperation(value = "Inactivate content area")
   @PutMapping("/inactivate/{contentAreaId}")
-  public ResponseEntity<ContentAreaResponse> inactivate(@PathVariable Long contentAreaId) {
+  public ResponseEntity<ContentAreaResponse> inactivate(@PathVariable String contentAreaId) {
     try {
       var contentArea = contentAreaService.inactivate(contentAreaId);
       return ResponseEntity.ok().body(contentArea.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
-      return ResponseEntity.status(e.getStatus()).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
 
   @ApiOperation(value = "Delete content area")
   @DeleteMapping("/delete/{contentAreaId}")
-  public ResponseEntity<String> delete(@PathVariable Long contentAreaId) {
+  public ResponseEntity<String> delete(@PathVariable String contentAreaId) {
     try {
       contentAreaService.deleteById(contentAreaId);
       return ResponseEntity.ok().body("Content area deleted");

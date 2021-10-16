@@ -4,8 +4,11 @@ import com.fiap.sociallearn.model.ClassScheduling;
 import com.fiap.sociallearn.model.CourseMode;
 import com.fiap.sociallearn.model.LearningContent;
 import com.fiap.sociallearn.model.User;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -15,9 +18,11 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClassSchedulingRequest {
-  private List<Long> usersIdList;
-  private Long learningContentId;
+  private List<String> usersIdList;
+  private String learningContentId;
   private CourseMode courseMode;
   private Double durationInHours;
   private LocalDateTime realizationDate;

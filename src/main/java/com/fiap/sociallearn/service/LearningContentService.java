@@ -21,7 +21,7 @@ public class LearningContentService {
     return learningContentRepository.save(learningContent);
   }
 
-  public LearningContent findById(Long id) throws ApiErrorException {
+  public LearningContent findById(String id) throws ApiErrorException {
     Optional<LearningContent> optionalLearningContent = learningContentRepository.findById(id);
     return optionalLearningContent.orElseThrow(() -> new ApiErrorException(HttpStatus.NOT_FOUND,
         "The informed learning content doesn't exists"));
@@ -31,13 +31,13 @@ public class LearningContentService {
     return (List<LearningContent>) learningContentRepository.findAll();
   }
 
-  public LearningContent update(Long learningContentId, LearningContent updatedLearningContent)
+  public LearningContent update(String learningContentId, LearningContent updatedLearningContent)
       throws ApiErrorException {
     var learningContent = updateSavedLearningContent(learningContentId, updatedLearningContent);
     return learningContentRepository.save(learningContent);
   }
 
-  private LearningContent updateSavedLearningContent(final Long learningContentId,
+  private LearningContent updateSavedLearningContent(final String learningContentId,
       final LearningContent updatedLearningContent) throws ApiErrorException {
     var savedLearningContent = findById(learningContentId);
     savedLearningContent.setName(updatedLearningContent.getName());
@@ -46,13 +46,13 @@ public class LearningContentService {
     return savedLearningContent;
   }
 
-  public LearningContent inactivate(Long learningContentId) throws ApiErrorException {
+  public LearningContent inactivate(String learningContentId) throws ApiErrorException {
     var savedLearningContent = findById(learningContentId);
     savedLearningContent.setActive(false);
     return learningContentRepository.save(savedLearningContent);
   }
 
-  public void deleteById(Long id) {
+  public void deleteById(String id) {
     learningContentRepository.deleteById(id);
   }
 }
