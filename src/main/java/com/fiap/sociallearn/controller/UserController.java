@@ -1,5 +1,8 @@
 package com.fiap.sociallearn.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fiap.sociallearn.exceptions.ApiErrorException;
 import com.fiap.sociallearn.model.User;
 import com.fiap.sociallearn.request.UserLearningContentRequest;
@@ -8,19 +11,24 @@ import com.fiap.sociallearn.response.UserLearningContentResponse;
 import com.fiap.sociallearn.response.UserResponse;
 import com.fiap.sociallearn.service.UserLearningContentService;
 import com.fiap.sociallearn.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import io.swagger.annotations.ApiOperation;
 
-@Api("User")
+//@Api("User")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/user")
 public class UserController {
   @Autowired
   UserService userService;
@@ -56,15 +64,13 @@ public class UserController {
   @GetMapping("/all/itens")
   public ResponseEntity<List<UserResponse>> findAll() {
     List<User> userList = userService.findAll();
-    List<UserResponse> userResponseList =
-        userList.stream().map(user -> user.toResponse()).collect(Collectors.toList());
+    List<UserResponse> userResponseList = userList.stream().map(user -> user.toResponse()).collect(Collectors.toList());
     return ResponseEntity.ok().body(userResponseList);
   }
 
   @ApiOperation(value = "Update user")
   @PutMapping("/update/{userId}")
-  public ResponseEntity<UserResponse> update(@PathVariable String userId,
-      @RequestBody UserRequest userRequest) {
+  public ResponseEntity<UserResponse> update(@PathVariable String userId, @RequestBody UserRequest userRequest) {
     try {
       var user = userService.update(userId, userRequest.toEntity());
       return ResponseEntity.ok().body(user.toResponse());
@@ -79,8 +85,7 @@ public class UserController {
   public ResponseEntity<UserLearningContentResponse> associateLearningContent(
       @RequestBody UserLearningContentRequest userLearningContentRequest) {
     try {
-      var savedUserLearningContent =
-          userLearningContentService.save(userLearningContentRequest.toEntity());
+      var savedUserLearningContent = userLearningContentService.save(userLearningContentRequest.toEntity());
       return ResponseEntity.ok().body(savedUserLearningContent.toResponse());
     } catch (ApiErrorException e) {
       e.printStackTrace();
