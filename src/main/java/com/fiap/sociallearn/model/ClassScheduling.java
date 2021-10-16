@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document
+@Document("classscheduling")
 public class ClassScheduling {
   @Id
   private String id;

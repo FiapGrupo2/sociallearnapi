@@ -19,7 +19,7 @@ import com.fiap.sociallearn.response.UserResponse;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
+@Document("users")
 public class User {
   @Id
   private String id;

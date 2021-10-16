@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document
+@Document("contentareas")
 public class ContentArea {
   @Id
   private String id;

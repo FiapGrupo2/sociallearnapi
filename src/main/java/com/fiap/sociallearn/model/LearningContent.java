@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document
+@Document("learningcontents")
 public class LearningContent {
   @Id
   private String id;
