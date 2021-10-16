@@ -21,11 +21,11 @@ public class ProfileService {
     return profileRepository.save(profile);
   }
 
-  public void deleteById(Long id) {
+  public void deleteById(String id) {
     profileRepository.deleteById(id);
   }
 
-  public Profile findById(Long id) throws ApiErrorException {
+  public Profile findById(String id) throws ApiErrorException {
     Optional<Profile> optionalProfile = profileRepository.findById(id);
     return optionalProfile.orElseThrow(
         () -> new ApiErrorException(HttpStatus.NOT_FOUND, "The informed profile doesn't exists"));
@@ -35,12 +35,12 @@ public class ProfileService {
     return (List<Profile>) profileRepository.findAll();
   }
 
-  public Profile update(Long profileId, Profile updatedProfile) throws ApiErrorException {
+  public Profile update(String profileId, Profile updatedProfile) throws ApiErrorException {
     var profile = updateSavedProfile(profileId, updatedProfile);
     return profileRepository.save(profile);
   }
 
-  private Profile updateSavedProfile(final Long profileId, final Profile updatedProfile)
+  private Profile updateSavedProfile(final String profileId, final Profile updatedProfile)
       throws ApiErrorException {
     var savedProfile = findById(profileId);
     savedProfile.setName(updatedProfile.getName());
@@ -49,7 +49,7 @@ public class ProfileService {
     return savedProfile;
   }
 
-  public Profile inactivate(Long profileId) throws ApiErrorException {
+  public Profile inactivate(String profileId) throws ApiErrorException {
     var savedProfile = findById(profileId);
     savedProfile.setActive(false);
     return profileRepository.save(savedProfile);

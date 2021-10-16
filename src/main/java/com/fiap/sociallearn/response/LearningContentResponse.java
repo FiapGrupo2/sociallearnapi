@@ -8,7 +8,7 @@ import java.util.List;
 @Builder
 @Data
 public class LearningContentResponse {
-  private Long id;
+  private String id;
   private String name;
   private List<ContentAreaResponse> contentAreas;
   private boolean active;

@@ -5,47 +5,38 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
+//import org.springframework.data.mongodb.core.index.Indexed;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Table(name = "class_scheduling")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@EntityListeners(AuditingEntityListener.class)
+@Document("classscheduling")
 public class ClassScheduling {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
 
-  @ManyToMany
-  @JoinTable(name = "class_scheduling_users", joinColumns = @JoinColumn(name = "class_scheduling_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
   private List<User> users;
 
-  @Enumerated(EnumType.STRING)
+  //@Enumerated(EnumType.STRING)
   private CourseMode courseMode;
 
-//  @OnDelete(action = OnDeleteAction.CASCADE)
-  @ManyToOne
-  @JoinColumn(name = "learning_content_id", nullable = false)
   private LearningContent learningContent;
 
   private LocalDateTime realizationDate;
 
   private Double durationInHours;
 
-  private boolean active = true;
+  private boolean active;
 
   @CreatedDate
   private Date createdDate;

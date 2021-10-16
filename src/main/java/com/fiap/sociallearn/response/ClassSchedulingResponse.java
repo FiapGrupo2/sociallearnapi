@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @Data
 public class ClassSchedulingResponse {
-  private Long id;
+  private String id;
   private List<UserResponse> users;
   private Long learningContentId;
   private CourseMode courseMode;

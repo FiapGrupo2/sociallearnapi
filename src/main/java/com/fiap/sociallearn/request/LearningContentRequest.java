@@ -2,8 +2,11 @@ package com.fiap.sociallearn.request;
 
 import com.fiap.sociallearn.model.ContentArea;
 import com.fiap.sociallearn.model.LearningContent;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.time.Instant;
@@ -13,9 +16,11 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LearningContentRequest {
   private String name;
-  private List<Long> contentAreaIds;
+  private List<String> contentAreaIds;
 
   public LearningContent toEntity() {
     return LearningContent.builder()

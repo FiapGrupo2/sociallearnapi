@@ -12,11 +12,11 @@ public class MatchService {
   @Autowired
   UserRepository userRepository;
 
-  public List<User> findAllTeachersByLearningContent(Long learningContentId) {
-    return userRepository.findAllUsersByLearningContentAndProfile(learningContentId, 2L);
+  public List<User> findAllTeachersByLearningContent(String learningContentId) {
+    return userRepository.findByLearningContentIdAndProfileId(learningContentId, "TEA");
   }
 
-  public List<User> findAllStudentsByLearningContent(Long learningContentId) {
-    return userRepository.findAllUsersByLearningContentAndProfile(learningContentId, 1L);
+  public List<User> findAllStudentsByLearningContent(String learningContentId) {
+    return userRepository.findByLearningContentIdAndProfileId(learningContentId, "STU");
   }
 }
